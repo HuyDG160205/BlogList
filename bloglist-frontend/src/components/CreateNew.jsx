@@ -8,6 +8,7 @@ const CreateNew = () => {
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
   const dispatch = useDispatch()
+  const user = useSelector((state) => state.user)
 
   const addBlog = (event) => {
     event.preventDefault()
@@ -19,6 +20,12 @@ const CreateNew = () => {
         url
       }
 
+      if (!user) {
+        return null
+      }
+
+      // blog.user = user
+
       dispatch(createBlog(blog))
 
       setTitle('')
@@ -27,7 +34,7 @@ const CreateNew = () => {
 
       dispatch(showNotification(`a new blog ${title} by ${author} added`, 5))
     } catch (error) {
-      dispatch(showNotification(error, 5))
+      dispatch(showNotification(error.response.data.error, 5))
     }
   }
 

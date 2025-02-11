@@ -1,11 +1,13 @@
-import { useEffect } from 'react'
-import userService from '../services/users'
-import { useDispatch, useSelector } from 'react-redux'
-import { setUser } from '../reducers/userReducer'
+import { useSelector } from 'react-redux'
+
 import { Link } from 'react-router-dom'
 
 const Users = () => {
   const users = useSelector((state) => state.users)
+
+  if (!users) {
+    return null
+  }
 
   return (
     <div>

@@ -1,0 +1,47 @@
+get http://localhost:3003/api/blogs
+
+###
+post http://localhost:3003/api/blogs/6795062df178bc685ebe0c4e/comments
+Content-Type: application/json
+
+{
+    "comments": "asd"
+}
+
+###
+post http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzhiZTI5MjE1MDUxN2UyZDVlNThhZWUiLCJpYXQiOjE3MzcyNjY1NzksImV4cCI6MTczNzI3MDE3OX0.HIthtOqrM_h5r4o0H8tyUdeGPyi5q6wN-GKRzPn1jlE
+
+{
+    "title":"asd",
+    "author":"456",
+    "url":"2131512",
+    "likes": 22
+}
+
+###
+delete http://localhost:3003/api/blogs/678c9a34f59268f4e3d46831
+Authorization: asd
+
+###
+post http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username": "1234",
+    "name": "456",
+    "password": "1234"
+}
+
+###
+get http://localhost:3003/api/users
+
+###
+post http://localhost:3003/api/login
+Content-Type: application/json
+
+{
+    "username": "1234",
+    "password": "1234"
+}

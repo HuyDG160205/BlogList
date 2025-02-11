@@ -1,14 +1,9 @@
-import { useSelector } from 'react-redux'
-import { useMatch } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const User = ({ user }) => {
-  const users = useSelector((state) => state.users)
-
-  const match = useMatch('/users/:id')
-  const userToFind = match ? users.find((u) => u.id === Number(match.params.id)) : null
-
-  if (!userToFind) {
-    return <div>asd</div>
+  const navigate = useNavigate()
+  if (!user) {
+    return navigate('/')
   }
 
   return (

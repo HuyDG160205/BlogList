@@ -1,9 +1,7 @@
-import { showNotification } from '../reducers/notificationReducer'
 import { useState } from 'react'
-import loginService from '../services/login'
+
 import { useDispatch } from 'react-redux'
-import { setUser } from '../reducers/userReducer'
-import blogService from '../services/blogs'
+
 import { useNavigate } from 'react-router-dom'
 import { login } from '../reducers/authReducer'
 
@@ -15,16 +13,13 @@ const LoginForm = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    try {
-      dispatch(login(username, password))
 
-      setUsername('')
-      setPassword('')
-    } catch (exception) {
-      dispatch(showNotification('wrong username or password', 5))
-    }
+    dispatch(login(username, password))
 
-    navigate('/users')
+    setUsername('')
+    setPassword('')
+
+    navigate('/')
   }
 
   return (
