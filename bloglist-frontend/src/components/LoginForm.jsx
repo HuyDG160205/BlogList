@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 
 import { useNavigate } from 'react-router-dom'
 import { login } from '../reducers/authReducer'
+import { TextField } from '@mui/material'
 
 const LoginForm = () => {
   const [username, setUsername] = useState('')
@@ -28,8 +29,8 @@ const LoginForm = () => {
 
       <form onSubmit={handleLogin}>
         <div>
-          username
-          <input
+          <TextField
+            label='Username'
             data-testid='username'
             value={username}
             onChange={(event) => {
@@ -38,8 +39,8 @@ const LoginForm = () => {
           />
         </div>
         <div>
-          password
-          <input
+          <TextField
+            label='Password'
             data-testid='password'
             type='password'
             value={password}

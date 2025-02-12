@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
 import { showNotification } from '../reducers/notificationReducer'
+import { Box, Button, Card, CardContent, TextField, Typography } from '@mui/material'
 
 const CreateNew = () => {
   const [title, setTitle] = useState('')
@@ -13,64 +14,65 @@ const CreateNew = () => {
   const addBlog = (event) => {
     event.preventDefault()
 
-    try {
-      const blog = {
-        title,
-        author,
-        url
-      }
-
-      if (!user) {
-        return null
-      }
-
-      // blog.user = user
-
-      dispatch(createBlog(blog))
-
-      setTitle('')
-      setAuthor('')
-      setUrl('')
-
-      dispatch(showNotification(`a new blog ${title} by ${author} added`, 5))
-    } catch (error) {
-      dispatch(showNotification(error.response.data.error, 5))
+    const blog = {
+      title,
+      author,
+      url
     }
+
+    if (!user) {
+      return null
+    }
+
+    // blog.user = user
+
+    dispatch(createBlog(blog))
+
+    setTitle('')
+    setAuthor('')
+    setUrl('')
   }
 
   return (
-    <div>
-      <h2>create new</h2>
-      <form onSubmit={addBlog}>
-        <div>
-          title
-          <input
+    <Card sx={{ maxWidth: 500, margin: '20px auto', padding: 2, boxShadow: 4, borderRadius: 3 }}>
+      <CardContent>
+        <Typography variant='h6' align='center' gutterBottom>
+          Create New Blog
+        </Typography>
+        <Box component='form' onSubmit={addBlog} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <TextField
             id='title'
-            type='text'
+            label='Title'
+            variant='outlined'
             value={title}
             onChange={({ target }) => setTitle(target.value)}
-            placeholder='title'
+            placeholder='Enter blog title'
+            fullWidth
           />
-        </div>
-        <div>
-          author
-          <input
+          <TextField
             id='author'
-            type='text'
+            label='Author'
+            variant='outlined'
             value={author}
             onChange={({ target }) => setAuthor(target.value)}
-            placeholder='author'
+            placeholder="Enter author's name"
+            fullWidth
           />
-        </div>
-        <div>
-          url
-          <input id='url' type='text' value={url} onChange={({ target }) => setUrl(target.value)} placeholder='url' />
-        </div>
-        <button id='create-button' type='submit'>
-          create
-        </button>
-      </form>
-    </div>
+          <TextField
+            id='url'
+            label='URL'
+            variant='outlined'
+            value={url}
+            onChange={({ target }) => setUrl(target.value)}
+            placeholder='Enter blog URL'
+            fullWidth
+          />
+          <Button id='create-button' type='submit' variant='contained' color='primary' sx={{ mt: 1 }}>
+            Create
+          </Button>
+        </Box>
+      </CardContent>
+    </Card>
   )
 }
 

@@ -3,6 +3,7 @@ import Blog from './Blog'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import Togglable from './Togglable'
 import CreateNew from './CreateNew'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 
 const Blogs = () => {
   const blogs = useSelector((state) => state.blog)
@@ -26,13 +27,27 @@ const Blogs = () => {
       <Togglable buttonLabel='add blog'>
         <CreateNew />
       </Togglable>
-      {blogs.map((blog) => (
-        <Link to={`/blogs/${blog.id}`} key={blog.id}>
-          <div style={blogStyle}>
-            {blog.title} {blog.author}
-          </div>
-        </Link>
-      ))}
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Blogs</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {blogs.map((blog) => (
+              <TableRow key={blog.id}>
+                <TableCell>
+                  <Link to={`/blogs/${blog.id}`} key={blog.id}>
+                    {blog.title}
+                  </Link>
+                </TableCell>
+                <TableCell>{blog.author}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   )
 }

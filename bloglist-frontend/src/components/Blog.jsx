@@ -3,6 +3,7 @@ import { commentBlog, removeThisBlog, updateLikes } from '../reducers/blogReduce
 import { Navigate } from 'react-router-dom'
 import { useState } from 'react'
 import { showNotification } from '../reducers/notificationReducer'
+import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material'
 
 const Blog = ({ blog, user }) => {
   const dispatch = useDispatch()
@@ -65,21 +66,41 @@ const Blog = ({ blog, user }) => {
   }
 
   return (
-    <div className='blog' style={blogStyle}>
-      <h2>{blog.title}</h2>
-      <div>{blog.url}</div>
-      <div>
-        {blog.likes} likes
-        <button onClick={likeBlog}>like</button>
-      </div>
-      <div>
-        Added by {blog.user.name}
-        {user.username === blog.user.username && <button onClick={removeBlog}>Remove</button>}
-      </div>
+    <Card sx={{ maxWidth: 600, margin: '20px auto', boxShadow: 3, borderRadius: 2 }}>
+      <CardContent>
+        <Typography variant='h5' component='div' gutterBottom>
+          {blog.title}
+        </Typography>
 
-      <CommentForm />
-      <Comments />
-    </div>
+        <Typography variant='body2' color='text.secondary'>
+          {blog.url}
+        </Typography>
+
+        <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+          <Typography variant='body1' sx={{ mr: 1 }}>
+            {blog.likes} likes
+          </Typography>
+          <Button variant='outlined' size='small' onClick={likeBlog}>
+            Like
+          </Button>
+        </Box>
+
+        <Typography variant='body2' color='text.secondary' sx={{ mt: 1 }}>
+          Added by {blog.user.name}
+        </Typography>
+
+        {user.username === blog.user.username && (
+          <Button variant='contained' color='error' size='small' onClick={removeBlog} sx={{ mt: 1 }}>
+            Remove
+          </Button>
+        )}
+      </CardContent>
+
+      <CardActions>
+        <CommentForm />
+        <Comments />
+      </CardActions>
+    </Card>
   )
 }
 

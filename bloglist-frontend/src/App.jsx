@@ -1,11 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import Blog from './components/Blog'
-import blogService from './services/blogs'
-import CreateNew from './components/CreateNew'
 import Notification from './components/Notification'
-import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
-import userService from './services/users'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeAllUser } from './reducers/userReducer'
 import { initializeBlogs } from './reducers/blogReducer'
@@ -14,6 +10,7 @@ import { Routes, Route, useMatch, Navigate, Link, useNavigate } from 'react-rout
 import User from './components/User'
 import { initializeUser, logout } from './reducers/authReducer'
 import Blogs from './components/Blogs'
+import { AppBar, Container, TableContainer, Toolbar, Typography, Link as MuiLink, Button, Box } from '@mui/material'
 
 const App = () => {
   const blogs = useSelector((state) => state.blog)
@@ -21,7 +18,6 @@ const App = () => {
   const user = useSelector((state) => state.user)
 
   const navigate = useNavigate()
-
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -42,40 +38,51 @@ const App = () => {
   const blogToFind = blogMatch ? blogs.find((b) => b.id === blogMatch.params.id) : null
 
   return (
-    <div>
-      <h1>blogs</h1>
+    <Container maxWidth='md'>
+      <Typography variant='h3' align='center' gutterBottom>
+        Blogs
+      </Typography>
+
       <Notification />
 
       {user ? (
-        <div>
-          <nav>
-            <Link to='/users'>users</Link>
-            <Link to='/blogs'> blogs</Link>
-            <p>{user.name} logged in</p>
-            <button
-              onClick={() => {
-                dispatch(logout())
-              }}
-            >
-              logout
-            </button>
-          </nav>
-        </div>
+        <AppBar position='static' color='primary'>
+          <Toolbar>
+            <MuiLink component={Link} to='/users' color='inherit' underline='none' sx={{ mr: 2 }}>
+              Users
+            </MuiLink>
+            <MuiLink component={Link} to='/blogs' color='inherit' underline='none' sx={{ mr: 2 }}>
+              Blogs
+            </MuiLink>
+
+            <Box sx={{ flexGrow: 1 }} />
+
+            <Typography variant='body1' sx={{ mr: 2 }}>
+              {user.name} logged in
+            </Typography>
+
+            <Button variant='contained' color='secondary' onClick={() => dispatch(logout())}>
+              Logout
+            </Button>
+          </Toolbar>
+        </AppBar>
       ) : (
         <LoginForm />
       )}
 
-      <Routes>
-        <Route path='/' element={<Navigate to='/blogs' replace />} />
-        <Route path='/users' element={<Users />} />
-        <Route path='/users/:id' element={userToFind ? <User user={userToFind} /> : <Navigate to='/users' />} />
-        <Route path='/blogs' element={<Blogs />} />
-        <Route
-          path='/blogs/:id'
-          element={blogToFind ? <Blog blog={blogToFind} user={user} /> : <Navigate to='/blogs' />}
-        />
-      </Routes>
-    </div>
+      <Box sx={{ mt: 4 }}>
+        <Routes>
+          <Route path='/' element={<Navigate to='/blogs' replace />} />
+          <Route path='/users' element={<Users />} />
+          <Route path='/users/:id' element={userToFind ? <User user={userToFind} /> : <Navigate to='/users' />} />
+          <Route path='/blogs' element={<Blogs />} />
+          <Route
+            path='/blogs/:id'
+            element={blogToFind ? <Blog blog={blogToFind} user={user} /> : <Navigate to='/blogs' />}
+          />
+        </Routes>
+      </Box>
+    </Container>
   )
 }
 
